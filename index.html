@@ -882,12 +882,12 @@ a.dt-row:hover svg{fill:var(--blue)}
 .part>h3{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);
   font-weight:600;margin:0 0 10px}
 
-.stop{display:grid;grid-template-columns:52px 1fr;gap:13px;background:var(--card2);
+.stop{display:grid;grid-template-columns:1fr 92px;grid-template-areas:'hd ph' 'bd bd';gap:10px 13px;background:var(--card2);
   border:1px solid var(--line);border-radius:13px;padding:13px;margin-bottom:8px;transition:.16s;
   cursor:pointer}
 .stop:hover{border-color:var(--line2)}
 .stop.dropped{opacity:.42}
-.thumb{width:78px;height:78px;border-radius:12px;display:grid;place-items:center;flex:none;
+.thumb{grid-area:ph;align-self:start;width:92px;height:92px;border-radius:12px;display:grid;place-items:center;flex:none;
   overflow:hidden;position:relative}
 .thumb svg{width:22px;height:22px}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -964,6 +964,12 @@ table.toll td.n{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(-
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
+.shead{grid-area:hd;min-width:0}
+.sbody{grid-area:bd;min-width:0}
+@media(max-width:420px){
+  .stop{grid-template-columns:1fr 72px;gap:9px 10px}
+  .thumb{width:72px;height:72px}
+}
 .pstat{font-size:12.5px;color:var(--tx3)}
 .pstat.ok{color:#7ec98b}
 .pstat.bad{color:#e8b23a}
@@ -1732,7 +1738,7 @@ function drawPanel(){
       '<div class="thumb'+(!photoOf(s)&&s.q&&PHOTO[PKEY(s)]===undefined?' ld':'')+'" style="background:'+col+'1f">'+(photoOf(s)
         ?'<img src="'+photoOf(s)+'" alt="" loading="lazy" onerror="this.remove()">'
         :ico(I[s.k]||I.transit,col,22))+'</div>'+
-      '<div class="sinfo">'+
+      '<div class="shead">'+
         '<div class="time">'+s.t+'</div>'+
         '<div class="sname">'+(s.noloc?'<span>'+s.n+'</span>':'<a href="'+placeUrl(s)+'" target="_blank" rel="noopener">'+s.n+'</a>')+
           (s.res?'<span class="res">Rezervovat</span>':'')+
@@ -1741,7 +1747,7 @@ function drawPanel(){
           (s.r?'<span class="star">'+s.r[0].toFixed(1)+ico(I.star,'var(--amber)',11)+
                '<span style="color:var(--tx3)">('+s.r[1].toLocaleString('cs')+')</span></span><span class="sep"></span>':'')+
           '<span>'+(KIND[s.k]||s.k)+'</span></div>'+
-        '<p class="why">'+s.why+'</p>'+
+        '</div><div class="sbody"><p class="why">'+s.why+'</p>'+
         '<div class="sfoot">'+
           (s.noloc?'':'<a class="mini" href="'+appleUrl(s)+'" target="_blank" rel="noopener">'+ico(I.open,'currentColor',12)+'Mapy</a>'+
              '<a class="mini" href="'+placeUrl(s)+'" target="_blank" rel="noopener">Google</a>')+
